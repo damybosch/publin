@@ -96,10 +96,43 @@ class Publin_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->publin, plugin_dir_url( __FILE__ ) . 'js/publin-public.js', array( 'jquery' ), $this->version, false );
+		if(is_post_type_archive('publin_magazinepages')) {
+			$siteURL = get_site_url();
+			$pluginDir = plugin_dir_url( __FILE__ );
+
+			wp_enqueue_script( 'publin-js', plugin_dir_url( __FILE__ ) . 'js/publin.js', array( 'jquery' ), $this->version, false );
+
+			wp_localize_script(
+				'publin-js',
+				'publin_php_vars',
+				array( 
+					'siteUrl' => $siteURL,
+					'pluginDir' => $pluginDir,
+				)
+			);
+		}
+		if(is_post_type_archive( 'publin_magazinepages' )) {
+			wp_enqueue_script( $this->publin, plugin_dir_url( __FILE__ ) . 'js/publin-public.js', array( 'jquery' ), $this->version, true );
+		}
 
 	}
 
 	
 
+	
+
 }
+
+add_filter('template_include', 'publin_magazine_templates');
+	function publin_magazine_templates( $template ) {
+		$page_magazines = array('publin_magazines');
+		$page_magazinepages = array('publin_magazinepages');
+
+		if (is_singular($page_magazines)) {
+			$template = plugin_dir_path( dirname( __FILE__ ) ).'/public/templates/single-magazine.php';
+		}else if( is_singular($page_magazinepages)) {
+			$template = plugin_dir_path( dirname( __FILE__ ) ).'/public/templates/single-magazinepages.php';
+		}
+
+		return $template;
+	}
