@@ -128,6 +128,7 @@ class Publin_Admin {
 					'singular_name' => __('Magazine', 'textdomain'),
 				),
 					'show_in_menu'        => 'publin',
+					'hierarchical' => true,
 					'rewrite' => array('slug' => 'magazines'),
 					'public'      => true,
 					'has_archive' => true,
@@ -143,10 +144,14 @@ class Publin_Admin {
 					'singular_name' => __('Magazine Page', 'textdomain'),
 				),
 					'show_in_menu'        => 'publin',
-					'capability_type'    =>  'page',
-					'public'      => true,
-					'has_archive' => true,
-   					'supports' => array('thumbnail', 'editor', 'revisions', 'title')
+					// 'hierarchical' => true,
+					'public' => true,
+					'publicly_queryable' => true,
+					'show_ui' => true, 
+					'query_var' => true,
+					'capability_type' => 'page',
+					'has_archive' => true, 
+   					'supports' => array('thumbnail', 'editor', 'revisions', 'title', 'page-attributes')
 			)
 		);
 		

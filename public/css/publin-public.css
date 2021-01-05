@@ -2,3 +2,15 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ .fl-content {
+     margin: 0 !important;
+ }
+
+ #result {
+     transition: opacity .5s ease-in-out;
+ }
+
+ #result.fadePage {
+     opacity: 0;
+ }
