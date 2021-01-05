@@ -1,0 +1,90 @@
+#menuBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background-color: rgba(0,0,0,.4);
+    z-index: 22;
+}
+
+#menuBar__inner {
+    display:flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+#menuBar__inner .magazinesButtons {
+    height: 100%;
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#menuBar__inner .magazinesButtons .menuBarButton {
+    width: 75px;
+    height: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #fff;
+    cursor:pointer;
+    text-decoration: none;
+}
+
+#menuBar .magazineLogo {
+    max-width: 160px;
+}
+
+#menuBar .magazineLogo img {
+    max-width: 100%;
+}
+
+#navigation {
+    position: fixed;
+    right: 0;
+    width: 100px;
+    height: 100vh;
+    top: 0;
+    z-index: 21;
+}
+
+#navigation #navigation__inner {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+#navigation #navigation__inner .navigation__buttons {
+    width: 100%;
+}
+
+#navigation #navigation__inner .navigation__buttons .navButton {
+    width: 60%;
+    height: 75px;
+    border-radius: 25px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,.4);
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#navigation #navigation__inner .navigation__buttons .navButton:hover {
+    background-color: rgba(0,0,0,.8);
+}
+
+#navigation #navigation__inner .navigation__buttons #nextPage.navButton {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#navigation #navigation__inner .navigation__buttons #prevPage.navButton {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

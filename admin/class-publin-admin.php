@@ -182,7 +182,7 @@ class Publin_Admin {
 			$basic_info =  new AT_Meta_Box($config);
 			$basic_info->addText($prefix.'subTitle',array('name'=> 'Subtitle'));
 			$basic_info->addText($prefix.'company',array('name'=> 'Company Name'));
-			
+			$basic_info->addText($prefix.'website',array('name'=> 'Website'));
 			$basic_info->addImage($prefix.'company-logo',array('name'=> 'Company Logo '));
 
 
@@ -206,6 +206,10 @@ class Publin_Admin {
 			$template->addSelect($prefix.'navigationPosition',array('top'=>'Top','bottom'=>'Bottom', 'left' => 'Left', 'right' => 'Right'),array('name'=> 'Navigation Position ', 'std'=> array('top')));
 			$template->addColor($prefix.'headerBackgroundColor',array('name'=> 'Header Background Color '));
 			$template->addColor($prefix.'headerTextColor',array('name'=> 'Header Text Color '));
+			$template->addColor($prefix.'navButtonBackground',array('name'=> 'Nav Buttons Background '));
+			$template->addColor($prefix.'navButtonColor',array('name'=> 'Nav Buttons Color '));
+			$template->addCheckboxList($prefix.'menubarbuttons',array('website'=>'Website ','startpagina'=>'Startpagina ', 'menuicoon' => 'Menu Icoon '),array('name'=> 'Menu Bar Buttons '));
+			
 
 
 			$template->Finish();
