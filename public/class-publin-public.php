@@ -72,7 +72,7 @@ class Publin_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
+		wp_enqueue_style( 'publin_framework', plugin_dir_url( __FILE__ ) . 'css/framework.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->publin, plugin_dir_url( __FILE__ ) . 'css/publin-public.css', array(), $this->version, 'all' );
 
 	}

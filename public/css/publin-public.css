@@ -2,6 +2,8 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+ @import url('https://pro.fontawesome.com/releases/v5.15.1/css/all.css');
+
 
  .fl-content {
      margin: 0 !important;
