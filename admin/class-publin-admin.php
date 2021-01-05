@@ -106,7 +106,7 @@ class Publin_Admin {
 
 	public function create_post_types() {
 
-		// Toevoegen Menu Item Backend
+		// * Toevoegen Menu Item Backend
 		add_action( 'admin_menu', 'wporg_options_page' );
 			function wporg_options_page() {
 				add_menu_page(
@@ -120,7 +120,7 @@ class Publin_Admin {
 				);
 			}
 
-		// Toevoegen Magazines Posttype onder Publin
+		// * Toevoegen Magazines Posttype onder Publin
 		register_post_type('publin_magazines',
 			array(
 				'labels'      => array(
@@ -135,7 +135,7 @@ class Publin_Admin {
 			)
 		);
 		
-		// Toevoegen MagazinesPages Posttype onder Publin
+		// * Toevoegen MagazinesPages Posttype onder Publin
 		register_post_type('publin_magazinePages',
 			array(
 				'labels'      => array(
@@ -153,26 +153,16 @@ class Publin_Admin {
 		
 	}
 
-	public function create_pages() {
-		add_submenu_page(
-			'edit.php?post_type=magazines',
-			__( 'Test Settings', 'menu-test' ),
-			__( 'Test Settings', 'menu-test' ),
-			'manage_options',
-			'testsettings',
-			'mt_settings_page'
-		);
-	}
 	public function create_magazine_metaboxes() {
 		
 
 		// https://github.com/bainternet/My-Meta-Box/blob/master/class-usage-demo.php
-
+		// * Maak gebruik van externe class zodat aanmaken van metaboxes makkelijker gaat.
 		require_once("includes/meta-box-class/my-meta-box-class.php");
 
 		if(is_admin()) {
 			$prefix = 'pmb_';
-
+			// * Maak meta box basis informatie magazine
 			$config = array(
 				'id'             => 'basic-info',          // meta box id, unique per meta box
 				'title'          => 'Basis informatie Magazine',          // meta box title
@@ -185,17 +175,20 @@ class Publin_Admin {
 			  );
 
 			$basic_info =  new AT_Meta_Box($config);
-
+			$basic_info->addText($prefix.'subTitle',array('name'=> 'Subtitle'));
 			$basic_info->addText($prefix.'company',array('name'=> 'Company Name'));
+			
 			$basic_info->addImage($prefix.'company-logo',array('name'=> 'Company Logo '));
 
 
 			$basic_info->Finish();
+			// ! Eindig meta box basis informatie
 
+			// * Maak meta box template instellingen magazine
 			$config2 = array(
 				'id'             => 'template setting',          // meta box id, unique per meta box
 				'title'          => 'Template Settings',          // meta box title
-				'pages'          => array('publin_magazines', 'publin_magazinepages'),      // post types, accept custom post types as well, default is array('post'); optional
+				'pages'          => array('publin_magazines'),      // post types, accept custom post types as well, default is array('post'); optional
 				'context'        => 'normal',            // where the meta box appear: normal (default), advanced, side; optional
 				'priority'       => 'high',            // order of meta box: high (default), low; optional
 				'fields'         => array(),            // list of meta fields (can be added by field arrays)
@@ -204,11 +197,14 @@ class Publin_Admin {
 			  );
 
 			$template =  new AT_Meta_Box($config2);
-
-			$template->addColor($prefix.'text-color',array('name'=> 'Text Color '));
+			$template->addSelect($prefix.'navigationTemplate',array('standard'=>'Standard','squared'=>'Squared', 'rounded' => 'Rounded'),array('name'=> 'Navigation Template ', 'std'=> array('standard')));
+			$template->addSelect($prefix.'navigationPosition',array('top'=>'Top','bottom'=>'Bottom', 'left' => 'Left', 'right' => 'Right'),array('name'=> 'Navigation Position ', 'std'=> array('top')));
+			$template->addColor($prefix.'headerBackgroundColor',array('name'=> 'Header Background Color '));
+			$template->addColor($prefix.'headerTextColor',array('name'=> 'Header Text Color '));
 
 
 			$template->Finish();
+			// ! Eindig meta box template instellingen
 
 			
 		};
@@ -218,4 +214,5 @@ class Publin_Admin {
 	}
 
 }
+// * Voeg de koppeling tussen magazines en magazines_pages toe.
 include_once 'includes/publin-magazines-connect.php';

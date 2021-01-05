@@ -100,6 +100,20 @@ class Publin_Public {
 
 	}
 
+	add_filter('template_include', 'publin_magazine_templates');
+	function publin_magazine_templates( $template ) {
+		$page_magazines = array('magazines');
+		$page_magazinepages = array('magazinepages');
+
+		if (is_singular($page_magazines)) {
+			$template = plugin_dir_path( dirname( __FILE__ ) ).'/public/templates/single-magazine.php';
+		}else if( is_singular($page_magazinepages)) {
+			$template = plugin_dir_path( dirname( __FILE__ ) ).'/public/templates/single-magazinepage.php';
+		}
+
+		return $template;
+	}
+
 	
 
 }
