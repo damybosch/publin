@@ -44,6 +44,8 @@ function get_magazine_pages(){
     $args = [
         'post_parent'         => $postID,
         'post_type'           => 'publin_magazinepages',
+        'meta_key' => 'page_order',
+        'orderby' => 'meta_value_num',
         'order'               => 'ASC',
         'posts_per_page'       => -1,
         // Add additional arguments
@@ -95,3 +97,66 @@ function wpa_insert_post( $data , $postarr ){
     return $data;
 }
 add_filter( 'wp_insert_post_data' , 'wpa_insert_post' , '99', 2 );
+
+add_action( 'save_post', 'page_add_order_meta', 10, 2 );
+// * VOEG META TOE VOOR ORDENEN VAN PAGINAS
+function page_add_order_meta($id) {
+    if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+        return $id;
+    } // end if
+
+    if('publin_magazinepages' == $_POST['post_type']) {
+        if(!current_user_can('edit_page', $id)) {
+            return $id;
+        } // end if
+    } else {
+        if(!current_user_can('edit_page', $id)) {
+            return $id;
+        } // end if
+    } // end if
+
+    add_post_meta($id, 'page_order', 0);
+}
+
+add_action( 'save_post', 'magazine_save_pages_order', 10, 2 );
+//  * SAVE CUSTOM VOLGORDE PAGINAS
+function magazine_save_pages_order($id){
+    if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+            return $id;
+        } // end if
+    
+    if('magazines' == $_POST['post_type']) {
+        if(!current_user_can('edit_page', $id)) {
+            return $id;
+        } // end if
+    } else {
+        if(!current_user_can('edit_page', $id)) {
+            return $id;
+        } // end if
+    } // end if
+
+    $args = [
+        'post_parent'         => $post->ID,
+        'post_type'           => 'publin_magazinepages',
+        'order'               => 'ASC',
+        'posts_per_page'       => -1,
+        // Add additional arguments
+    ];
+    $q = new WP_Query( $args );
+
+    $count = 0;
+    
+    if ( $q->have_posts() ) :
+       while ( $q->have_posts() ) : $q->the_post();    
+           $count++;
+           $pageID = get_the_ID();
+           $inputName = 'post_'.$pageID;
+
+           if(!empty($_POST[$inputName])){
+                add_post_meta($pageID, 'page_order', $_POST[$inputName]);
+                update_post_meta($pageID, 'page_order', $_POST[$inputName]);
+           }
+        endwhile;
+   endif;
+   wp_reset_query();
+}

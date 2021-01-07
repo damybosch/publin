@@ -4,8 +4,13 @@
     left: 0;
     width: 100%;
     height: 75px;
-    background-color: rgba(0,0,0,.4);
-    z-index: 22;
+    background-color: rgba(0,0,0,.6);
+    z-index: 50;
+}
+
+#menuBar.bottom {
+    top: auto;
+    bottom: 0;
 }
 
 #menuBar__inner {
@@ -13,6 +18,14 @@
     justify-content: space-between;
     width: 100%;
     height: 100%;
+}
+
+
+#menuBar__inner .magazineTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
 }
 
 #menuBar__inner .magazinesButtons {
@@ -48,7 +61,7 @@
     width: 100px;
     height: 100vh;
     top: 0;
-    z-index: 21;
+    z-index: 49;
 }
 
 #navigation #navigation__inner {
@@ -69,14 +82,27 @@
     display:flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0,0,0,.4);
+    background-color:#000;
+    opacity: .6;
     color: #fff;
     cursor: pointer;
     font-size: 20px;
 }
 
+#navigation #navigation__inner .navigation__buttons.squared .navButton {
+    border-radius: 0;
+    width: 75%;
+    margin-bottom: 5px;
+}
+
+#navigation #navigation__inner .navigation__buttons.rounded .navButton {
+    border-radius: 50% !important;
+    width: 75%;
+    margin-bottom: 5px;
+}
+
 #navigation #navigation__inner .navigation__buttons .navButton:hover {
-    background-color: rgba(0,0,0,.8);
+    opacity: 1;
 }
 
 #navigation #navigation__inner .navigation__buttons #nextPage.navButton {

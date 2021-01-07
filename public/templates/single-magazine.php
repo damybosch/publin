@@ -1,21 +1,29 @@
 <?php 
 
+$page_id = get_the_ID();
+$logo = get_post_meta( $page_id, 'pmb_company-logo', true ) ;
+$website = get_post_meta( $page_id, 'pmb_website', true ) ;
+$thumbnailInMenu = get_post_meta( $page_id, 'pmb_thumbnailInMenu', true ) ;
+$menuBarButtons = get_post_meta( $page_id, 'pmb_menubarbuttons', false ) ;
+$magazineSubtitle = get_post_meta( $page_id, 'pmb_subTitle', true ) ;
+$navTemplate = get_post_meta( $page_id, 'pmb_navigationTemplate', true ) ;
+$menuBarPosition = get_post_meta( $page_id, 'pms_template', true ) ;
+
 //wp_enqueue_script('publin-js');
 
-    $page_id = get_the_ID();
 
     query_posts( array(
         'post_type' => 'publin_magazinepages',
         'post_parent' => $page_id,
+        'meta_key' => 'page_order',
+        'orderby' => 'meta_value_num',
         'order' => 'ASC',
         'depth'          => 5,
         'posts_per_page' => -1
     ) );
     
 
-    $logo = get_post_meta( $page_id, 'pmb_company-logo', true ) ;
-    $menuBarButtons = get_post_meta( $page_id, 'pmb_menubarbuttons', false ) ;
-    $website = get_post_meta( $page_id, 'pmb_website', true ) ;
+    
 
     //print_r($menuBarButtons);
      function my_global_builder_posts( $post_ids ) {

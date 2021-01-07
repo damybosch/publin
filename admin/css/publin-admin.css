@@ -11,6 +11,11 @@
      background-color: #f3f5f6;
      padding: 5px 10px;
      color: #0071a1;
+     cursor: grab;
+ }
+
+ #sortable li:active {
+   cursor: grabbing;
  }
 
  #sortable li p {

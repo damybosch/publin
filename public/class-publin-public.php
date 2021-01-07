@@ -72,9 +72,19 @@ class Publin_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+
+		$handle = 'publin_custom_css';
+		$page_id = get_the_ID();
+
+		
+
 		wp_enqueue_style( 'publin_framework', plugin_dir_url( __FILE__ ) . 'css/framework.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'publin_menu_variations', plugin_dir_url( __FILE__ ) . 'css/menu-variations.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->publin, plugin_dir_url( __FILE__ ) . 'css/publin-public.css', array(), $this->version, 'all' );
 
+		wp_enqueue_style( $handle, plugin_dir_url( __FILE__ ) . 'css/publin-custom.css', array(), $this->version, 'all' );
+		$custom_css = self::render_css();
+		wp_add_inline_style( $handle, $custom_css );
 	}
 
 	/**
@@ -95,6 +105,7 @@ class Publin_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		
 
 		if(is_post_type_archive('publin_magazinepages')) {
 			$siteURL = get_site_url();
@@ -115,6 +126,35 @@ class Publin_Public {
 			wp_enqueue_script( $this->publin, plugin_dir_url( __FILE__ ) . 'js/publin-public.js', array( 'jquery' ), $this->version, true );
 		}
 
+	}
+
+	// * Render CCS uit php bestand.
+	function render_css () {
+		$css = '';
+
+		$page_id = get_the_ID();
+	
+		$file     = plugin_dir_path( __FILE__ ) . 'css/includes/frontend.css.php';
+	
+		ob_start();
+		include $file;
+		// self::render();
+		$css .= ob_get_clean();
+
+		return $css;
+	}
+
+	// * Render JS uit php bestand.
+	function render_js () {
+		$js = '';
+
+		$file = plugin_dir_path( __FILE__ ) . 'js/includes/frontend.js.php';
+
+		ob_start();
+		include $file;
+		$js .= ob_get_clean();
+
+		return $js;
 	}
 
 	

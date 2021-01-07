@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     let activePage = 1;
     let result = document.querySelector('#result');
     let totalPages = document.querySelectorAll('.page').length;
+    let menuItems = document.querySelectorAll('.menuItem');
 
     // * Start Magazine
     displayNewPage();
@@ -10,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // * Display page doormiddel van HttpRequest
     function displayNewPage() {
         const pagename = document.querySelector('#pages .page.count' + activePage).dataset.pagename;
-        result.classList.add('fadePage');
+
         var xhr = new XMLHttpRequest();
 
         xhr.onreadystatechange = function () {
@@ -19,45 +20,68 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 let doc = parser.parseFromString(xhr.responseText, "text/html");
                 let content = doc.querySelector('.fl-page-content').innerHTML;
                 result.innerHTML = content;
+
             }
         };
 
         xhr.open('GET', publin_php_vars.siteUrl + '/publin_magazinepages/' + pagename);
+        result.classList.add('fadePage');
 
+        xhr.onload = function () {
+            window.scrollTo(0, 0);
+            setTimeout(function () {
+                result.classList.remove('fadePage');
+            }, 100);
+            
+            
+        };
         xhr.send();
 
-        setTimeout(function () {
-            result.classList.remove('fadePage');
-        }, 2000);
-        setTimeout(function () {
-            window.scrollTo(0, 0);
-        }, 1000);
-    }
+        // * als menu is geopend sluit menu!
+        if (document.querySelector('.menuButton').classList.contains('menuOpen')) {
+            document.querySelector('.menuButton').classList.remove('menuOpen');
+            document.querySelector('#pagemenu').classList.remove('open');
+        }
 
+        // * Doe Fade effect als nieuwe pagina word geladen
+        setTimeout(function () {
+            
+        }, 500);
+    }
+    // * Laad eerste pagina
     function displayFirstPage() {
-        if(activePage != 1) {
+        if (activePage != 1) {
             activePage = 1;
             displayNewPage();
         }
     }
-
+    // * Laad volgende pagina
     function displayNextPage() {
         if (activePage < totalPages) {
             activePage++;
             displayNewPage();
         }
     }
-
+    // * Laad vorige pagina
     function displayPrevPage() {
         if (activePage <= 1) {
             return false;
         } else {
             activePage--;
             displayNewPage();
-            
+
         }
 
     }
+
+    // * Loop door menu items en voeg eventlistener.
+    for (let i = 0; i < menuItems.length; i++) {
+        menuItems[i].addEventListener('click', function () {
+            activePage = this.dataset.pagecount;
+            displayNewPage();
+        });
+    }
+
 
     const nextPageButton = document.querySelector('#nextPage');
     const prevPageButton = document.querySelector('#prevPage');
@@ -71,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     startButton.addEventListener('click', function () {
         displayFirstPage();
     });
-
 
 
 });
